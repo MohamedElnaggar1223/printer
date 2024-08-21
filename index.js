@@ -87,7 +87,8 @@ app.post('/', express.raw({ type: 'application/pdf' }), async (req, res) => {
     {
         const options = {};
         if (req.query.printer) {
-            options.printer = req.query.printer;
+            options.printer = String(req.query.printer);
+            console.log('printer:', options.printer)
         }
         const pdfBuffer = await createPDF();
         console.log('pdf buffer created')
@@ -95,7 +96,7 @@ app.post('/', express.raw({ type: 'application/pdf' }), async (req, res) => {
         fs.writeFileSync(pdfPath, pdfBuffer);
         console.log('pdf file created')
         //@ts-ignore
-        await ptp.print(pdfPath, {...options, unix: ["-o fit-to-page"], win32: ['-print-settings "fit"']});
+        await ptp.print(pdfPath, {...options});
         console.log('pdf printed')
         fs.unlinkSync(pdfPath);
     
