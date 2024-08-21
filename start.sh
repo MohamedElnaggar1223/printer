@@ -1,13 +1,17 @@
 #!/bin/sh
 
-# Start the CUPS service
 echo "Starting CUPS service..."
 /usr/sbin/cupsd -f &
 
-# Ensure CUPS has fully started
-echo "Waiting for CUPS to fully start..."
 sleep 10
 
-# Start the Node.js application
+# Ensure CUPS started correctly
+if ps aux | grep -v grep | grep cupsd; then
+   echo "CUPS started successfully"
+else
+   echo "Failed to start CUPS"
+   exit 1
+fi
+
 echo "Starting Node.js application..."
 npm start
