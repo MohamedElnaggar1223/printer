@@ -2,9 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const chrome = require('@sparticuz/chromium')
 const puppeteer = require('puppeteer-core')
-const { execFile } = require('child_process')
 const ptp = require('pdf-to-printer');
-const path = require('path');
 
 
 const PORT = process.env.PORT || 3001;
