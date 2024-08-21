@@ -45,4 +45,4 @@ COPY . .
 EXPOSE 3001
 
 # Define the command to run the application
-CMD ["node", "index.js"]
+CMD service cups start && node index.js
