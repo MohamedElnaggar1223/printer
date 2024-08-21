@@ -47,6 +47,10 @@ const createPDF = async () => {
 //     }
 // });
 
+app.get('/', async (req, res) => {
+    return res.json({ message: 'Hello World' });
+})
+
 app.post('/', express.raw({ type: 'application/pdf' }), async (req, res) => {
 
     const options = {};
@@ -67,3 +71,5 @@ app.post('/', express.raw({ type: 'application/pdf' }), async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 })
+
+module.exports = app;
