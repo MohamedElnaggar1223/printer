@@ -75,10 +75,13 @@ app.post('/', express.raw({ type: 'application/pdf' }), async (req, res) => {
             options.printer = req.query.printer;
         }
         const pdfBuffer = await createPDF();
+        console.log('pdf buffer created')
         const pdfPath = 'output.pdf';
         fs.writeFileSync(pdfPath, pdfBuffer);
+        console.log('pdf file created')
         //@ts-ignore
         await ptp.print(pdfPath, options);
+        console.log('pdf printed')
         fs.unlinkSync(pdfPath);
     
         res.status(204)
