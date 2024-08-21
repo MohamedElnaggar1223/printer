@@ -1,6 +1,6 @@
 const express = require('express');
 const fs = require('fs');
-const puppeteer = require('puppeteer')
+const puppeteer = require('puppeteer-core')
 const chromium = require('chrome-aws-lambda')
 const { execFile } = require('child_process')
 const ptp = require('pdf-to-printer');
