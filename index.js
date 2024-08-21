@@ -19,6 +19,7 @@ const createPDF = async () => {
         const browser = await puppeteer.launch({
             headless: true,
             args: [
+                ...chrome.args,
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-dev-shm-usage',
@@ -27,6 +28,7 @@ const createPDF = async () => {
                 '--no-zygote',
                 '--single-process',
                 '--disable-gpu',
+                executablePath,
             ],
         })
         // const browser = await puppeteer.launch({
