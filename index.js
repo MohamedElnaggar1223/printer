@@ -3,7 +3,7 @@ const fs = require('fs');
 const chrome = require('@sparticuz/chromium')
 const puppeteer = require('puppeteer-core')
 const ptp = require('pdf-to-printer');
-
+const path = require('path');
 
 const PORT = process.env.PORT || 3001;
 
@@ -76,7 +76,7 @@ app.post('/', express.raw({ type: 'application/pdf' }), async (req, res) => {
         }
         const pdfBuffer = await createPDF();
         console.log('pdf buffer created')
-        const pdfPath = 'output.pdf';
+        const pdfPath = path.join('/tmp', 'output.pdf');
         fs.writeFileSync(pdfPath, pdfBuffer);
         console.log('pdf file created')
         //@ts-ignore
