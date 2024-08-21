@@ -48,5 +48,5 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Expose the port the app runs on
 EXPOSE 3001
 
-# Start supervisor to manage both CUPS and the Node app
+# Start supervisor to manage only CUPS
 CMD ["/usr/bin/supervisord"]
