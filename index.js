@@ -1,7 +1,8 @@
 const express = require('express');
 const fs = require('fs');
 const chrome = require('@sparticuz/chromium')
-const puppeteer = require('puppeteer-core')
+// const puppeteer = require('puppeteer-core')
+const puppeteer = require('puppeteer')
 const ptp = require('unix-print');
 const path = require('path');
 
@@ -16,12 +17,13 @@ const createPDF = async () => {
 
         console.log('executablePath:', executablePath)
 
-        const browser = await puppeteer.launch({
-            args: [...chrome.args],
-            defaultViewport: chrome.defaultViewport,
-            executablePath,
-            headless: false,
-        })
+        const browser = await puppeteer.launch()
+        // const browser = await puppeteer.launch({
+        //     args: [...chrome.args],
+        //     defaultViewport: chrome.defaultViewport,
+        //     executablePath,
+        //     headless: false,
+        // })
         const page = await browser.newPage();
         await page.setContent('<h1>Hello, World!</h1>');
         const pdfBuffer = await page.pdf();
