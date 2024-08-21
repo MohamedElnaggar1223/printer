@@ -9,9 +9,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 const createPDF = async () => {
-    const browser = await puppeteer.launch({
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.setContent('<h1>Hello, World!</h1>');
     const pdfBuffer = await page.pdf();
