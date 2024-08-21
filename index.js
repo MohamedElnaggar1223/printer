@@ -21,7 +21,7 @@ const createPDF = async () => {
     await page.setContent('<h1>Hello, World!</h1>');
     const pdfBuffer = await page.pdf();
     await browser.close();
-    return pdfBuffer;
+    return pdfBuffer
 }
 
 // const printPDF = async (pdfBuffer) => {
