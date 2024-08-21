@@ -12,11 +12,15 @@ const app = express();
 const createPDF = async () => {
     try
     {
+        const executablePath = await chrome.executablePath()
+
+        console.log('executablePath:', executablePath)
+
         const browser = await puppeteer.launch({
-            args: [...chrome.args, '--disable-features=site-per-process'],
+            args: [...chrome.args],
             defaultViewport: chrome.defaultViewport,
-            executablePath: await chrome.executablePath(),
-            headless: true,
+            executablePath,
+            headless: false,
         })
         const page = await browser.newPage();
         await page.setContent('<h1>Hello, World!</h1>');
