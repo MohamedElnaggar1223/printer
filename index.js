@@ -13,8 +13,8 @@ const createPDF = async () => {
     const browser = await puppeteer.launch({
         args: [...chrome.args, '--disable-features=site-per-process'],
         defaultViewport: chrome.defaultViewport,
-        // executablePath: await chrome.executablePath(),
-        headless: false,
+        executablePath: await chrome.executablePath(),
+        headless: true,
     })
     const page = await browser.newPage();
     await page.setContent('<h1>Hello, World!</h1>');
