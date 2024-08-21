@@ -10,17 +10,25 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 const createPDF = async () => {
-    const browser = await puppeteer.launch({
-        args: [...chrome.args, '--disable-features=site-per-process'],
-        defaultViewport: chrome.defaultViewport,
-        executablePath: await chrome.executablePath(),
-        headless: true,
-    })
-    const page = await browser.newPage();
-    await page.setContent('<h1>Hello, World!</h1>');
-    const pdfBuffer = await page.pdf();
-    await browser.close();
-    return pdfBuffer;
+    try
+    {
+        const browser = await puppeteer.launch({
+            args: [...chrome.args, '--disable-features=site-per-process'],
+            defaultViewport: chrome.defaultViewport,
+            executablePath: await chrome.executablePath(),
+            headless: true,
+        })
+        const page = await browser.newPage();
+        await page.setContent('<h1>Hello, World!</h1>');
+        const pdfBuffer = await page.pdf();
+        await browser.close();
+        return pdfBuffer;
+    }
+    catch (error)
+    {
+        console.error('Error creating PDF:', error);
+        throw error;
+    }
 }
 
 // const printPDF = async (pdfBuffer) => {
