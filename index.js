@@ -54,7 +54,7 @@ const createPDF = async () => {
 //         console.log('test')
 //         const pdfBuffer = await createPDF();
 //         await printPDF(pdfBuffer);
-//         res.send('PDF printed!');
+//         res.send('PDF printed!')
 //     }
 //     catch (error)
 //     {
