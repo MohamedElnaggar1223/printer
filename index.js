@@ -68,20 +68,27 @@ app.get('/', async (req, res) => {
 })
 
 app.post('/', express.raw({ type: 'application/pdf' }), async (req, res) => {
-
-    const options = {};
-    if (req.query.printer) {
-        options.printer = req.query.printer;
+    try
+    {
+        const options = {};
+        if (req.query.printer) {
+            options.printer = req.query.printer;
+        }
+        const pdfBuffer = await createPDF();
+        const pdfPath = 'output.pdf';
+        fs.writeFileSync(pdfPath, pdfBuffer);
+        //@ts-ignore
+        await ptp.print(pdfPath, options);
+        fs.unlinkSync(pdfPath);
+    
+        res.status(204)
+        res.send()
     }
-    const pdfBuffer = await createPDF();
-    const pdfPath = 'output.pdf';
-    fs.writeFileSync(pdfPath, pdfBuffer);
-    //@ts-ignore
-    await ptp.print(pdfPath, options);
-    fs.unlinkSync(pdfPath);
-
-    res.status(204)
-    res.send()
+    catch (error)
+    {
+        console.error('Error creating PDF:', error);
+        res.status(500).send('Error creating PDF');
+    }
 })
 
 app.listen(PORT, () => {
