@@ -10,35 +10,25 @@ COPY package*.json ./
 # Install application dependencies
 RUN npm install
 
-# Install additional required packages, Puppeteer dependencies, and supervisor
+# Install CUPS and its dependencies
 RUN apt-get update && apt-get install -y \
-    apt-transport-https \
-    ca-certificates \
-    fonts-liberation \
-    libappindicator3-1 \
-    libasound2 \
-    libatk-bridge2.0-0 \
-    libatk1.0-0 \
-    libcups2 \
     cups \
     cups-bsd \
     cups-client \
     libcups2-dev \
-    supervisor \
     --no-install-recommends && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-# Install Puppeteer Chrome browser
-RUN npx puppeteer install
 
 # Copy the application code
 COPY . .
 
-# Copy the supervisor configuration file
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Copy the start script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
 # Expose the port the app runs on
 EXPOSE 3001
 
-# Start supervisor to manage CUPS and the Node.js application
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf", "-n"]
+# Command to run the start script
+CMD ["/start.sh"]
