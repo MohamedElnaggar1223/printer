@@ -2,7 +2,7 @@
 FROM node:20
 
 # Set the working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
@@ -39,7 +39,7 @@ RUN apt-get update && apt-get install -y \
 # Install Puppeteer Chrome browser
 RUN npx puppeteer install
 
-# Copy the rest of the application code
+# Copy the application code
 COPY . .
 
 # Copy the supervisor configuration file
@@ -48,5 +48,5 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Expose the port the app runs on
 EXPOSE 3001
 
-# Start supervisor to manage only CUPS
-CMD ["/usr/bin/supervisord"]
+# Start supervisor to manage CUPS and the Node.js application
+CMD ["/usr/bin/supervisord", "-n"]
