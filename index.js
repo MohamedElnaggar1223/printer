@@ -28,8 +28,8 @@ const createPDF = async () => {
                 '--no-zygote',
                 '--single-process',
                 '--disable-gpu',
-                executablePath,
             ],
+            executablePath,
         })
         // const browser = await puppeteer.launch({
         //     args: [...chrome.args],
