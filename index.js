@@ -12,7 +12,7 @@ const app = express();
 
 const createPDF = async () => {
     const browser = await puppeteer.launch({
-        // executablePath: '/opt/render/.cache/puppeteer',
+        executablePath: '/opt/render/.cache/puppeteer',
         headless: true,
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
