@@ -107,7 +107,7 @@ app.post('/', express.raw({ type: 'application/pdf' }), async (req, res) => {
     catch (error)
     {
         console.error('Error creating PDF:', error);
-        res.status(500).send('Error creating PDF', error);
+        res.status(500).send(`Error creating PDF: ${error}`);
     }
 })
 
