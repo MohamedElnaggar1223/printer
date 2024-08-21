@@ -1,5 +1,5 @@
 # Use an official Node runtime as a parent image
-FROM node:18
+FROM node:20
 
 # Set the working directory
 WORKDIR /usr/src/app
@@ -10,7 +10,7 @@ COPY package*.json ./
 # Install application dependencies
 RUN npm install
 
-# Install additional required packages and Puppeteer dependencies
+# Install additional required packages, Puppeteer dependencies, and supervisor
 RUN apt-get update && apt-get install -y \
     apt-transport-https \
     ca-certificates \
@@ -32,6 +32,7 @@ RUN apt-get update && apt-get install -y \
     cups-bsd \
     cups-client \
     libcups2-dev \
+    supervisor \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
@@ -41,8 +42,11 @@ RUN npx puppeteer install
 # Copy the rest of the application code
 COPY . .
 
+# Copy the supervisor configuration file
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 # Expose the port the app runs on
 EXPOSE 3001
 
-# Define the command to run the application
-CMD service cups start && node index.js
+# Start supervisor to manage both CUPS and the Node app
+CMD ["/usr/bin/supervisord"]
