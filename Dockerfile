@@ -28,7 +28,10 @@ RUN apt-get update && apt-get install -y \
     libxrandr2 \
     wget \
     xdg-utils \
+    cups \
     cups-bsd \
+    cups-client \
+    libcups2-dev \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
