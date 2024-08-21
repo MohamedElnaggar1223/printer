@@ -1,7 +1,6 @@
 const express = require('express');
 const fs = require('fs');
-const puppeteer = require('puppeteer-core')
-const chromium = require('chrome-aws-lambda')
+const puppeteer = require('puppeteer')
 const { execFile } = require('child_process')
 const ptp = require('pdf-to-printer');
 const path = require('path');
@@ -12,16 +11,12 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 const createPDF = async () => {
-    const browser = await puppeteer.launch({
-        args: chromium.args,
-        executablePath: await chromium.executablePath,
-        headless: chromium.headless,
-    });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.setContent('<h1>Hello, World!</h1>');
     const pdfBuffer = await page.pdf();
     await browser.close();
-    return pdfBuffer
+    return pdfBuffer;
 }
 
 // const printPDF = async (pdfBuffer) => {
