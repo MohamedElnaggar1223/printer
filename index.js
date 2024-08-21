@@ -2,7 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const chrome = require('@sparticuz/chromium')
 const puppeteer = require('puppeteer-core')
-const ptp = require('unix-print');
+const { print, getPrinters } = require('unix-print');
 const path = require('path');
 
 const PORT = process.env.PORT || 3001;
@@ -95,8 +95,9 @@ app.post('/', express.raw({ type: 'application/pdf' }), async (req, res) => {
         const pdfPath = path.join('/tmp', 'output.pdf');
         fs.writeFileSync(pdfPath, pdfBuffer);
         console.log('pdf file created')
-        //@ts-ignore
-        await ptp.print(pdfPath, {...options});
+        const printers = await getPrinters();
+        printers.map(printer => console.log(printer.printer))
+        await print(pdfPath);
         console.log('pdf printed')
         fs.unlinkSync(pdfPath);
     
