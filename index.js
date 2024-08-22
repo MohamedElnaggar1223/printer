@@ -96,8 +96,9 @@ app.post('/', express.raw({ type: 'application/pdf' }), async (req, res) => {
         fs.writeFileSync(pdfPath, pdfBuffer);
         console.log('pdf file created')
         const printers = await getPrinters();
+        console.log('printers:', printers.length)
         printers.map(printer => console.log(printer.printer))
-        await print(pdfPath);
+        await print(pdfPath, 'RICOH Aficio SP 3510DN');
         console.log('pdf printed')
         fs.unlinkSync(pdfPath);
     
