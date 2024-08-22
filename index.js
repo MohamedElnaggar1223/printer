@@ -111,7 +111,7 @@ app.post('/', express.raw({ type: 'application/pdf' }), async (req, res) => {
     }
 })
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
 })
 
